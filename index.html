@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>삼삼엠투 기업회원 제도 기획안</title>
+  <style>
+    :root {
+      --bg:#f6f7f9;
+      --paper:#fff;
+      --ink:#1f2933;
+      --muted:#667085;
+      --line:#e4e7ec;
+      --soft:#f2f4f7;
+      --dark:#111827;
+      --accent:#2563eb;
+      --accent-soft:#eff6ff;
+      --shadow:0 10px 30px rgba(15,23,42,.05);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Apple SD Gothic Neo","Noto Sans KR",sans-serif;line-height:1.65;word-break:keep-all}
+    .page{max-width:1120px;margin:40px auto;padding:0 24px 60px}
+    .cover{background:linear-gradient(135deg,#111827 0%,#1f2937 56%,#2563eb 100%);color:#fff;border-radius:28px;padding:56px;box-shadow:0 24px 70px rgba(15,23,42,.2);margin-bottom:26px}
+    .eyebrow{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#bfdbfe;font-weight:800;margin-bottom:14px}
+    .cover h1{margin:0;font-size:42px;line-height:1.16;letter-spacing:-.045em}
+    .cover p{margin:22px 0 0;max-width:780px;color:#dbeafe;font-size:17px}
+    .meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:34px}
+    .meta-card{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);border-radius:16px;padding:16px}
+    .meta-card strong{display:block;font-size:12px;color:#bfdbfe;margin-bottom:4px}
+    .meta-card span{display:block;color:#fff;font-size:15px;font-weight:800}
+    .section{background:var(--paper);border:1px solid var(--line);border-radius:24px;padding:34px 38px;margin-bottom:22px;box-shadow:var(--shadow)}
+    h2{margin:0 0 22px;padding-bottom:14px;border-bottom:2px solid var(--soft);font-size:28px;line-height:1.25;letter-spacing:-.035em;color:var(--dark)}
+    h3{margin:32px 0 14px;font-size:20px;line-height:1.35;letter-spacing:-.025em;color:var(--dark)}
+    h3:first-child{margin-top:0}
+    h4{margin:24px 0 10px;font-size:16px;color:var(--dark)}
+    p{margin:0 0 14px}
+    .lead{font-size:17px;color:#344054}
+    table{width:100%;border-collapse:collapse;margin:16px 0 24px;border:1px solid var(--line);border-radius:14px;overflow:hidden;font-size:14px}
+    th{background:#f8fafc;color:#344054;text-align:left;font-weight:800;padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+    td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+    tr:last-child td{border-bottom:0}
+    .flow{background:#0f172a;color:#e2e8f0;border-radius:18px;padding:18px 20px;margin:16px 0 24px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:13px;line-height:1.8;white-space:pre-wrap;overflow-x:auto}
+    .roadmap-title{display:flex;align-items:center;gap:10px;margin-top:26px}
+    .phase{display:inline-flex;width:32px;height:32px;align-items:center;justify-content:center;border-radius:999px;color:#fff;background:var(--accent);font-weight:900;font-size:14px;flex:0 0 auto}
+    .decision-list{counter-reset:item;margin:0;padding:0;list-style:none}
+    .decision-list li{counter-increment:item;display:grid;grid-template-columns:36px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid var(--line);margin:0}
+    .decision-list li:last-child{border-bottom:0}
+    .decision-list li::before{content:counter(item);width:26px;height:26px;border-radius:50%;background:var(--soft);display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#475467}
+    @media(max-width:860px){.page{margin:20px auto;padding:0 14px 40px}.cover{padding:34px 28px}.cover h1{font-size:30px}.meta-grid{grid-template-columns:1fr}.section{padding:26px 22px}table{display:block;overflow-x:auto;white-space:nowrap}}
+    @media print{body{background:#fff}.page{margin:0;max-width:none;padding:0}.cover,.section{box-shadow:none;border-radius:0;break-inside:avoid}.section{border-left:0;border-right:0}}
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="cover">
+      <h1>삼삼엠투 기업회원 제도 기획안</h1>
+      <p>기업계정(총괄관리자)과 기업이용자 권한 구조를 기반으로 기업 임차인의 계약요청, 결제, 증빙 관리를 우선 구축하는 제품 기획안. 기업 임대인 운영 기능은 수요와 운영 복잡도를 확인하며 중기 과제로 확장함.</p>
+      <div class="meta-grid">
+        <div class="meta-card"><strong>1차 구조</strong><span>기업계정 + 기업이용자</span></div>
+        <div class="meta-card"><strong>임차인 핵심</strong><span>기업예약·분리결제·증빙</span></div>
+        <div class="meta-card"><strong>관리 기준</strong><span>권한·조회·CSV</span></div>
+        <div class="meta-card"><strong>중기 확장</strong><span>임대인 운영·Desk·정산</span></div>
+      </div>
+    </header>
+
+    <section class="section" id="executive-summary">
+      <h2>1. 요약</h2>
+      <p class="lead">기업회원 제도는 현재 개인회원 기준으로 흡수되고 있는 기업 수요를 기업계정 단위의 B2B 이용 구조로 전환하기 위한 기획안임. 1차 제품은 기업 임차인의 계약요청, 결제, 증빙, 이용내역 관리를 우선 범위로 두고, 기업 임대인 운영 기능은 수요와 운영 복잡도를 확인한 뒤 중기 과제로 확장함.</p>
+
+      <h3>1.1 추진 배경</h3>
+      <p>삼삼엠투에는 출장, 프로젝트 체류, 중기 거주 목적의 기업 수요가 지속적으로 유입되고 있음. 그러나 현재는 기업 고객도 개인회원으로 가입해 계약요청과 결제를 진행하는 구조이므로, 기업 단위의 계정 관리, 권한 관리, 증빙 관리, 이용내역 정리가 체계적으로 분리되어 있지 않음.</p>
+      <p>이 구조에서는 기업 고객이 예약 이후 내부 비용 처리와 증빙 확보를 별도로 해결해야 하고, 운영팀은 결제·증빙 관련 문의를 건별로 대응하게 됨. 특히 가상계좌성 결제는 임대료 증빙 발급 여부가 임대인별로 달라 기업 고객의 CS, 불만, 이탈 리스크가 커질 수 있음. 따라서 초기 기업회원 제도는 결제수단을 신용카드 중심으로 두고, 카드 매출전표 기반의 명확한 증빙 구조를 우선 제공하는 방향이 적합함.</p>
+
+      <h3>1.2 1차 제품 방향</h3>
+      <p>1차 제품은 기존 계약요청형 예약 흐름을 유지하면서, 결제 진입 전 기업 이용 여부를 선택하고, 기업 이용으로 분류된 건에 별도 결제·증빙 구조를 적용하는 방식으로 설계함. 방 탐색 및 선택, 계약요청, 임대인 계약승인까지는 기존 여정을 활용하고, 결제 단계에서 보증금과 이용대금을 구분해 처리함.</p>
+      <p>계정 구조는 기업계정(총괄관리자)과 기업이용자를 함께 제공하는 방향으로 설정함. 기업회원은 조직 단위 이용을 전제로 하므로, 초기부터 권한과 이용내역 귀속 기준을 마련하는 것이 이후 리포트, 증빙, 결제, 승인 플로우 확장에 유리함. 기업계정(총괄관리자)은 전체 기업 예약, 결제, 보증금, 증빙, CSV를 통합 관리하고, 기업이용자는 부여된 권한 안에서 계약요청과 결제를 진행함.</p>
+
+      <table>
+        <thead><tr><th>영역</th><th>1차 적용 방향</th></tr></thead>
+        <tbody>
+          <tr><td>계정</td><td>기업계정(총괄관리자) + 기업이용자 구조</td></tr>
+          <tr><td>예약</td><td>기존 계약요청형 여정 유지, 결제 진입 전 기업 이용 여부 선택</td></tr>
+          <tr><td>결제 구조</td><td>보증금/이용대금 각각 결제 또는 보증금 가승인 + 이용대금 실결제</td></tr>
+          <tr><td>결제수단</td><td>증빙 안정성과 CS 리스크 축소를 위해 신용카드 중심 운영</td></tr>
+          <tr><td>증빙</td><td>카드 매출전표, 수수료 증빙, 월별 이용내역, CSV 다운로드 제공</td></tr>
+          <tr><td>관리</td><td>기업계정(총괄관리자)이 기업이용자 예약·결제·증빙 내역을 통합 조회</td></tr>
+        </tbody>
+      </table>
+
+      <h3>1.3 핵심 기대 효과</h3>
+      <p>기업회원 제도 도입의 핵심 효과는 기업 고객을 개인회원 기반의 임시 운영에서 기업계정 기반의 관리 구조로 전환하는 데 있음. 기업 고객은 예약, 결제, 증빙, 이용내역을 기업 단위로 확인할 수 있고, 삼삼엠투는 반복적인 증빙 CS와 수기 대응 부담을 줄일 수 있음.</p>
+      <table>
+        <thead><tr><th>대상</th><th>기대 효과</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>기업 고객</td><td>기업 단위 이용 구조 확보</td><td>개인회원으로 흩어져 있던 이용 건을 기업계정 기준으로 관리하고, 기업이용자별 예약·결제 내역을 확인할 수 있음</td></tr>
+          <tr><td>회계·총무 담당자</td><td>비용 처리 부담 완화</td><td>보증금과 이용대금을 구분해 처리하여 최초 결제금액 부담과 퇴거 이후 부분취소 정산 부담을 줄임</td></tr>
+          <tr><td>운영팀</td><td>증빙 관련 CS 축소</td><td>신용카드 매출전표 중심으로 초기 결제수단을 운영해 증빙 공백과 건별 문의를 줄임</td></tr>
+          <tr><td>삼삼엠투</td><td>B2B 전환 기반 확보</td><td>기업계정, 기업이용자, 기업 예약 데이터가 축적되면 대표카드, 승인 플로우, 월 단위 청구 등으로 확장 가능</td></tr>
+        </tbody>
+      </table>
+
+      <h3>1.4 단계별 확장 방향</h3>
+      <p>중기에는 기업 대표카드, 대리 예약, 승인 플로우, 계좌이체성 결제, 기업 전용 운영 Desk를 검토함. 기업 임대인 기능은 현재 수요와 1차 우선순위를 고려해 중기 과제로 분리하고, 방·계약·정산 관리, 신고용 CSV, 매출 대시보드, 증빙 발행 지원 순으로 확장함.</p>
+      <table>
+        <thead><tr><th>단계</th><th>핵심 과제</th></tr></thead>
+        <tbody>
+          <tr><td>단기</td><td>기업계정·기업이용자, 기업 이용 예약 구분, 신용카드 증빙, 보증금 분리 결제 또는 가승인, CSV</td></tr>
+          <tr><td>중기</td><td>대표카드, 대리 예약, 승인 플로우, 계좌이체성 결제, 기업 전용 운영 Desk, 기업 임대인 운영</td></tr>
+          <tr><td>장기</td><td>월 단위 청구, 외부 시스템 연동, 증빙 자동화, 정산·매출 분석 고도화</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" id="direction">
+      <h2>2. 상세 기획 방향</h2>
+
+      <h3>2.1 기업회원 제도 정의</h3>
+      <p class="lead">기업회원 제도는 기존 개인회원 구조 위에 기업 단위의 계정, 예약, 결제, 증빙, 정산 관리 기능을 추가하는 제품 확장안임.</p>
+      <p>1차 제품은 기업계정(총괄관리자)과 기업이용자 구조를 함께 구축해 기업 임차인의 예약·결제·증빙 문제를 해결하는 데 집중함. 기업계정(총괄관리자)은 기업 정보와 전체 이용내역을 관리하고, 기업이용자는 부여된 권한 안에서 계약요청과 결제를 진행함.</p>
+      <p>기업회원은 조직 단위 이용을 전제로 하므로 초기부터 권한 구조를 갖추는 편이 운영 확장성과 데이터 정합성 측면에서 유리함. 기업 임대인 운영 기능은 현재 수요와 우선순위를 고려해 중기 확장 영역으로 둠.</p>
+
+      <h3>2.2 1차 제품 범위</h3>
+      <p>1차 제품은 기존 계약요청형 예약 흐름 안에 기업 이용 예약을 구분하고, 결제 단계에서 보증금과 이용대금을 분리하는 구조를 적용하는 데 집중함. 계정 구조는 기업계정(총괄관리자)과 기업이용자를 함께 제공해 기업 단위 조회, 증빙, 리포트 관리 기준을 초기에 정립함.</p>
+      <table>
+        <thead><tr><th>구분</th><th>1차 방향</th></tr></thead>
+        <tbody>
+          <tr><td>계정 구조</td><td>기업계정(총괄관리자) + 기업이용자 구조</td></tr>
+          <tr><td>가입 방식</td><td>사업자 정보 검증 후 기업계정(총괄관리자) 생성</td></tr>
+          <tr><td>기업계정(총괄관리자)</td><td>기업 정보 관리, 기업이용자 초대·관리, 전체 예약·결제·증빙·리포트 조회</td></tr>
+          <tr><td>기업이용자</td><td>기업계정에 소속되어 계약요청, 결제, 이용내역 확인 수행</td></tr>
+          <tr><td>기업 임차인</td><td>계약요청형 예약 흐름 유지, 기업 이용 예약 구분, 보증금/이용대금 각각 결제 또는 보증금 가승인, 기업계정 기준 증빙·CSV 제공</td></tr>
+          <tr><td>결제·증빙</td><td>기업 예약은 신용카드 결제와 카드 매출전표 중심으로 운영해 증빙 관련 CS와 이탈 리스크 축소</td></tr>
+          <tr><td>기업 예약 결제</td><td>보증금/이용대금 각각 결제 또는 보증금 가승인 + 이용대금 실결제</td></tr>
+          <tr><td>리포트/CSV</td><td>기업계정 기준 이용내역, 결제, 보증금, 증빙 내역 제공</td></tr>
+        </tbody>
+      </table>
+
+      <h3>2.3 중장기 확장 방향</h3>
+      <p>아래 기능은 기업회원 사용량과 운영 니즈를 확인한 뒤 단계적으로 검토함.</p>
+      <table>
+        <thead><tr><th>구분</th><th>확장 방향</th></tr></thead>
+        <tbody>
+          <tr><td>기업 대표카드</td><td>기업계정(총괄관리자)이 등록한 대표카드로 허용된 기업이용자가 결제</td></tr>
+          <tr><td>대리 예약</td><td>예약 담당자와 실제 이용 주체를 분리하고, 입주 안내·임대인 메시지를 이용자에게 자동 분기</td></tr>
+          <tr><td>기업 신뢰도 기반 즉시 확정</td><td>검증된 기업 임차인에 한해 일부 방의 임대인 승인 단계를 간소화하는 구조 검토</td></tr>
+          <tr><td>승인 플로우</td><td>금액, 지역, 기간 조건 초과 시 기업계정(총괄관리자) 승인</td></tr>
+          <tr><td>부서·지점·프로젝트 관리</td><td>기업 이용 내역을 조직 단위로 분류</td></tr>
+          <tr><td>계좌이체성 결제</td><td>임대료 증빙 가능 임대인 풀이 확인된 이후 제한 오픈</td></tr>
+          <tr><td>기업 임대인 증빙 발행</td><td>계좌이체성 결제 확대 시 기업 임대인이 임차인 거래 정보를 기준으로 현금영수증·계산서·세금계산서를 발행할 수 있는 구조 검토</td></tr>
+          <tr><td>기업 임대인 운영</td><td>기업 임대인 수요와 운영 빈도 확인 후 방·계약·정산 관리 기능을 중기 과제로 확장</td></tr>
+          <tr><td>기업 임대인 운영 대시보드</td><td>기업계정(총괄관리자)이 지점·방·담당자별 매출, 계약, 정산 현황을 확인할 수 있는 관리 화면 검토</td></tr>
+          <tr><td>월 단위 청구</td><td>검증된 기업 대상 월별 청구서·정산서 제공</td></tr>
+          <tr><td>기업 전용 운영 Desk</td><td>기업 예약, 결제, 증빙 문의를 전담 처리하는 운영 지원 채널 검토</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" id="problems">
+      <h2>3. 문제 정의</h2>
+
+      <h3>3.1 기획 배경</h3>
+      <p>삼삼엠투에는 기업 고객의 출장 숙소, 중기 거주, 프로젝트 체류 수요가 지속적으로 유입되고 있음. 국내 기업의 국내 출장뿐 아니라 해외 법인의 국내 파견, 연구소 방문, 외국인 출장자 체류 수요도 발생하고 있음.</p>
+      <p>현재 제품은 개인회원의 이용 흐름을 기준으로 설계되어 있어 기업 고객의 결제, 증빙, 담당자 관리 요구를 제품 안에서 충분히 처리하기 어려움. 기업회원 제도는 기업 수요를 운영팀의 개별 대응으로 처리하는 수준을 넘어, 제품 안에서 기업 단위 이용 구조를 제공하기 위한 개편안임.</p>
+      <p>다만 기업 고객은 예약 이후 결제, 증빙, 정산 관련 문의가 반복될 가능성이 높으므로 제품 기능만으로 모든 운영 부담을 해소하기는 어려움. 기업회원 초기 활성화 단계에서는 기업 예약과 증빙 이슈를 전담 대응할 수 있는 운영 지원 채널도 함께 검토할 필요가 있음.</p>
+
+      <h3>3.2 기업 임차인 측 문제</h3>
+      <table>
+        <thead><tr><th>영역</th><th>현재 한계</th><th>개선 방향</th></tr></thead>
+        <tbody>
+          <tr><td>기업 이용 구분</td><td>개인 예약과 기업 예약이 구분되지 않음</td><td>예약 단계에서 기업 이용 여부 선택</td></tr>
+          <tr><td>결제</td><td>보증금과 이용대금이 함께 처리되면 최초 결제금액이 커지고 기업 내부 지출 기안이 복잡해짐</td><td>기업 이용 예약에는 보증금/이용대금 분리 결제 또는 보증금 가승인 구조 적용</td></tr>
+          <tr><td>부분취소</td><td>퇴거 후 보증금 반환이 부분취소로 남으면 경비 처리와 사후 정산이 복잡해짐</td><td>보증금은 별도 결제 또는 가승인으로 분리해 이용대금 정산과 구분</td></tr>
+          <tr><td>증빙</td><td>계좌이체성 결제는 임대료 증빙 여부가 임대인별로 달라 예약 이후 CS와 불만이 발생할 수 있음</td><td>초기에는 카드 매출전표가 남는 신용카드 중심 운영</td></tr>
+          <tr><td>관리</td><td>기업 이용 건을 한 번에 조회하고 정리하기 어려움</td><td>기업계정 기준 예약·결제·증빙 조회 및 CSV 제공</td></tr>
+          <tr><td>해외 법인 대응</td><td>해외 법인 담당자 또는 외국인 이용자의 계정 합류·인증 기준이 필요함</td><td>해외 법인 증빙과 담당자 인증 기준 마련</td></tr>
+        </tbody>
+      </table>
+
+      <h3>3.3 기업 임대인 측 문제</h3>
+      <p>기업 임대인 기능은 현재 일부 수요가 존재하나, 1차 제품의 핵심 병목은 기업 임차인의 결제·증빙 문제에 있음. 따라서 기업 임대인 기능은 현행 운영을 기반으로 대응하되, 지점·방·담당자 단위 관리와 정산·신고 편의 기능은 중기 과제로 분리함.</p>
+      <table>
+        <thead><tr><th>영역</th><th>현재 한계</th><th>개선 방향</th></tr></thead>
+        <tbody>
+          <tr><td>방 운영</td><td>여러 지점·담당자를 계정 단위로 구분하기 어려움</td><td>중기 과제로 기업이용자별 방 배정 검토</td></tr>
+          <tr><td>계약 조회</td><td>기업 전체 계약을 한 번에 보기 어려움</td><td>기업계정(총괄관리자) 전체 계약 조회 검토</td></tr>
+          <tr><td>정산</td><td>계정당 1개 정산계좌 구조라 지점·방별 정산 관리가 어려움</td><td>사업자 명의 계좌 기준 복수 계좌 등록·매핑 검토</td></tr>
+          <tr><td>매출 관리</td><td>지점, 방, 담당자별 매출과 정산 현황을 한 화면에서 확인하기 어려움</td><td>기업계정 기준 매출·계약·정산 대시보드 검토</td></tr>
+          <tr><td>신고 자료</td><td>세무 신고와 내부 회계 처리를 위해 전체 계약·매출 내역을 별도로 정리해야 함</td><td>전체 내역 CSV 다운로드 제공 검토</td></tr>
+          <tr><td>증빙 발행</td><td>계좌이체성 결제 확대 시 임대료 증빙 발행을 별도 운영으로 처리해야 할 가능성이 있음</td><td>기업 임대인 화면에서 거래 정보 기반 증빙 발행 지원 검토</td></tr>
+        </tbody>
+      </table></section>
+
+    <section class="section" id="account">
+      <h2>4. 기업회원 공통 구조</h2>
+
+      <h3>4.1 기업회원 정의</h3>
+      <p>기업회원은 법인사업자 또는 개인사업자가 삼삼엠투에서 기업 기준의 예약, 결제, 증빙, 정산, 계약 관리를 이용하기 위한 회원 유형임.</p>
+      <p>1차 제품에서는 기업 임차인의 예약·결제·증빙 관리에 집중하고, 기업계정(총괄관리자)과 기업이용자 권한 구조를 함께 제공함. 기존 개인회원의 임차인/임대인 병행 구조는 유지하되, 기업 단위 관리가 필요한 영역에 기업계정, 기업이용자, 기업 예약 구분, 증빙·정산 정책을 추가함.</p>
+
+      <h3>4.2 계정 구조</h3>
+      <p>1차 제품의 계정 구조는 기업계정(총괄관리자)과 기업이용자의 2단계로 구성함. 기업계정(총괄관리자)은 기업 정보, 기업 예약, 결제, 증빙, 리포트를 관리하는 기준 계정임.</p>
+      <p>기업이용자는 기업계정에 소속되어 계약요청과 결제를 수행하는 하위 이용자 계정임. 초기부터 이 구조를 반영하면 기업 이용 내역의 귀속, 권한, 증빙 조회 기준을 명확히 정리할 수 있음.</p>
+      <table>
+        <thead><tr><th>계정</th><th>역할</th><th>적용 단계</th></tr></thead>
+        <tbody>
+          <tr><td>기업계정(총괄관리자)</td><td>기업 정보, 기업 예약, 결제, 증빙, 리포트를 총괄 관리하는 기준 계정</td><td>단기</td></tr>
+          <tr><td>기업이용자</td><td>기업계정에 소속되어 계약요청, 결제, 본인 이용내역 확인을 수행하는 하위 이용자 계정</td><td>단기</td></tr>
+        </tbody>
+      </table>
+      <p>기업계정(총괄관리자)은 기업 전체 관리 권한과 기본 이용 권한을 함께 보유함. 기업이용자가 생성한 계약요청과 결제 내역도 기업계정 기준으로 통합 관리하며, 총괄관리자는 전체 증빙과 리포트를 조회·다운로드할 수 있어야 함.</p>
+
+      <h3>4.3 권한 구조</h3>
+      <table>
+        <thead><tr><th>기능</th><th>기업계정(총괄관리자)</th><th>기업이용자</th></tr></thead>
+        <tbody>
+          <tr><td>기업 예약 생성</td><td>가능</td><td>가능</td></tr>
+          <tr><td>신용카드 결제</td><td>가능</td><td>가능</td></tr>
+          <tr><td>기업 이용내역 조회</td><td>전체 가능</td><td>본인 건 가능</td></tr>
+          <tr><td>증빙 다운로드</td><td>전체 가능</td><td>본인 건 가능</td></tr>
+          <tr><td>기업이용자 초대·삭제</td><td>가능</td><td>불가</td></tr>
+          <tr><td>임차인 역할 활성화</td><td>가능</td><td>불가</td></tr>
+          <tr><td>임대인 역할 활성화</td><td>중기 검토</td><td>불가</td></tr>
+          <tr><td>방 등록·방 관리</td><td>중기 검토</td><td>중기 검토</td></tr>
+          <tr><td>정산계좌 등록·수정</td><td>중기 검토</td><td>변경 요청 기준 검토</td></tr>
+        </tbody>
+      </table>
+
+      <h3>4.4 가입 대상</h3>
+      <table>
+        <thead><tr><th>대상</th><th>포함 여부</th><th>판단 기준</th></tr></thead>
+        <tbody>
+          <tr><td>법인사업자</td><td>포함</td><td>기업 기준 예약, 결제, 증빙, 담당자 관리 필요</td></tr>
+          <tr><td>직원 또는 담당자가 있는 개인사업자</td><td>포함</td><td>조직 단위 이용, 비용 처리, 담당자 관리 필요</td></tr>
+          <tr><td>1인 개인사업자</td><td>조건부 포함</td><td>증빙·비용 처리 니즈가 명확한 경우</td></tr>
+          <tr><td>개인 임대사업자</td><td>조건부 포함</td><td>임대료 증빙, 정산계좌, 방 운영 관리 필요</td></tr>
+          <tr><td>해외 법인</td><td>조건부 포함</td><td>국내 숙소 이용 목적, 담당자 신원, 기업 실체 확인이 가능한 경우</td></tr>
+          <tr><td>일반 개인 이용자</td><td>제외</td><td>기업 기준 관리 필요성이 없는 경우</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" id="common-journey">
+      <h2>5. 공통 가입·전환 여정</h2>
+
+      <h3>5.1 신규 기업회원 가입</h3>
+      <p>기업회원 가입은 기업계정(총괄관리자)을 생성하기 위한 절차임. 기업 정보와 담당자 인증을 확인한 뒤 운영 검수를 통과하면 기업계정(총괄관리자)을 생성함.</p>
+      <div class="flow">기업회원 가입 선택
+ → 국내 사업자등록정보 또는 해외 기업 식별 정보 입력
+ → 담당자 인증
+ → 기업 실체 확인
+ → 필요 시 추가 서류 제출
+ → 운영팀 검수
+ → 기업계정(총괄관리자) 생성</div>
+      <table>
+        <thead><tr><th>상황</th><th>처리</th></tr></thead>
+        <tbody>
+          <tr><td>국내 법인·사업자</td><td>사업자등록번호, 대표자명, 개업일자 기반 자동 검증 우선 적용</td></tr>
+          <tr><td>국내 사업자 검증 실패</td><td>입력값 재확인 후 재시도, 필요 시 사업자등록증 제출</td></tr>
+          <tr><td>포털 이메일 사용</td><td>담당자 권한 확인</td></tr>
+          <tr><td>해외 법인</td><td>해외 사업자등록증, 법인 등기 서류, 담당자 재직 증빙, 회사 도메인 이메일 등을 조합해 운영 검수</td></tr>
+        </tbody>
+      </table>
+
+      <h3>5.2 기업이용자 초대 및 합류</h3>
+      <p>기업이용자는 기업계정(총괄관리자)의 초대를 통해 합류함. 기업이용자 구조를 1차 제품에 포함하면 실제 이용자가 직접 계약요청과 결제를 진행할 수 있고, 총괄관리자는 기업 기준으로 전체 이용내역과 증빙을 관리할 수 있음.</p>
+      <div class="flow">기업이용자 합류 여정
+ → 기업계정(총괄관리자)이 기업이용자 초대
+ → 초대 링크 또는 이메일 인증
+ → 기업계정 합류 요청
+ → 기업계정(총괄관리자) 승인
+ → 기업이용자 권한 부여
+ → 기업 기준 이용 가능</div>
+
+      <h3>5.3 기존 개인회원의 기업회원 전환</h3>
+      <p>기존 개인회원이 기업회원으로 전환하려면 신규 기업회원 가입과 동일한 인증·검수 절차를 거쳐야 함. 검수 완료 후 기존 개인회원의 이용 이력을 기업계정(총괄관리자)에 연결함.</p>
+      <table>
+        <thead><tr><th>데이터</th><th>처리 정책</th></tr></thead>
+        <tbody>
+          <tr><td>예약 내역</td><td>유지. 전환 전/후 거래 구분값 저장</td></tr>
+          <tr><td>정산 내역</td><td>유지. 전환 전 정산은 기존 개인 기준 유지</td></tr>
+          <tr><td>등록 방</td><td>유지. 기업 임대인 기준으로 재검수</td></tr>
+          <tr><td>정산계좌</td><td>사업자 명의 계좌인지 재검수</td></tr>
+          <tr><td>증빙 정보</td><td>전환 이후 거래부터 기업회원 기준 적용</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" id="tenant-journey">
+      <h2>6. 기업 임차인 운영 여정</h2>
+
+      <h3>6.1 여정 개요</h3>
+      <p>기업 임차인 여정은 삼삼엠투의 기존 계약요청형 구조를 유지하면서, 결제 진입 전 기업 이용 여부를 구분하고 기업 예약에 맞는 결제·증빙 구조를 적용하는 방식으로 설계함.</p>
+      <p>임차인 역할이 활성화된 기업계정(총괄관리자)은 전체 기업 예약을 관리함. 기업계정(총괄관리자)과 기업이용자는 모두 계약요청과 결제를 진행할 수 있으며, 기업이용자가 진행한 이용내역도 기업계정 기준으로 통합 관리함.</p>
+      <div class="flow">기업 임차인 예약 여정
+ → 방 탐색 및 선택
+ → 계약요청
+ → 임대인 계약승인
+ → 기업 이용 선택(결제 진입 전)
+ → 기업 예약 결제 구조 적용
+    ├─ 보증금과 이용대금 각각 결제
+    └─ 보증금 가승인 + 이용대금 실결제
+ → 결제 완료
+ → 계약 확정
+ → 입주 및 이용
+ → 퇴거
+ → 추가 비용 정산
+ → 이용내역·증빙 다운로드</div>
+
+      <h3>6.2 기업 계약요청 및 관리 기준</h3>
+      <p>기업계정(총괄관리자)과 기업이용자는 일반 예약과 동일하게 방 선택 후 계약요청을 진행함. 임대인이 계약을 승인하면 결제 단계로 진입하며, 이 시점에 기업 이용으로 선택된 건에는 기업 예약 결제 구조를 적용함.</p>
+      <p>이용내역과 증빙은 기업계정 기준으로 통합 관리함. 기업이용자가 진행한 계약요청, 결제 상태, 보증금 상태, 증빙 내역도 기업계정(총괄관리자)이 전체 조회·다운로드할 수 있어야 함.</p>
+
+      <h3>6.3 기업 예약 결제 구조</h3>
+      <p>기업 예약 결제 구조는 보증금과 이용대금을 구분해 처리하는 것이 핵심임. 보증금과 이용대금이 함께 처리되면 최초 결제금액이 커지고, 퇴거 이후 보증금 반환이 부분취소로 남아 기업 내부 비용 처리와 사후 정산이 복잡해질 수 있음.</p>
+      <table>
+        <thead><tr><th>결제 구조</th><th>적용 방향</th><th>적용 시점</th></tr></thead>
+        <tbody>
+          <tr><td>보증금/이용대금 각각 결제</td><td>임대인 계약승인 후 보증금과 이용대금을 별도 결제 건으로 처리하고, 두 결제가 완료되면 계약 확정</td><td>단기</td></tr>
+          <tr><td>보증금 가승인 + 이용대금 실결제</td><td>임대인 계약승인 후 보증금은 가승인으로 처리하고, 이용대금과 수수료는 실제 결제함. 두 처리가 완료되면 계약 확정</td><td>단기</td></tr>
+        </tbody>
+      </table>
+
+      <h3>6.4 결제수단 및 증빙 방향</h3>
+      <p>기업회원 초기 결제수단은 신용카드를 기본으로 함. 기업 고객은 예약 이후 증빙 처리가 불명확할 경우 CS 문의, 내부 비용 처리 지연, 예약 취소 또는 재이용 이탈로 이어질 가능성이 높음.</p>
+      <p>신용카드 결제는 카드 매출전표가 남기 때문에 기업 고객이 내부 지출 증빙으로 활용하기 쉽고, 운영팀의 증빙 관련 대응 부담도 낮출 수 있음. 따라서 1차 제품에서는 결제 편의성보다 증빙 안정성을 우선해 신용카드 중심으로 운영함.</p>
+      <p>계좌이체성 결제는 초기 기본 플로우에서 제외함. 현재 삼삼엠투는 수수료 금액에 대해서만 증빙을 발행할 수 있고, 임대료 증빙은 임대인의 발급 가능 여부에 따라 달라짐. 따라서 계좌이체성 결제를 기업회원에게 제공하려면 임대료 증빙 발급이 가능한 임대인 현황을 먼저 확인해야 함.</p>
+      <table>
+        <thead><tr><th>결제수단</th><th>적용 방향</th></tr></thead>
+        <tbody>
+          <tr><td>신용카드</td><td>증빙 안정성과 CS 리스크 축소를 고려한 기업회원 초기 기본 결제수단</td></tr>
+          <tr><td>계좌이체성 결제</td><td>임대료 증빙 가능 임대인 풀 확인 후 제한 검토</td></tr>
+          <tr><td>기업 대표카드 결제</td><td>중기 과제</td></tr>
+          <tr><td>월 단위 청구</td><td>장기 과제</td></tr>
+        </tbody>
+      </table>
+
+      <h3>6.5 추가 비용 및 보증금 정산</h3>
+      <p>퇴거 후 추가 비용이 발생한 경우 보증금에서 즉시 차감하지 않고, 비용 항목과 금액을 안내한 뒤 별도 결제로 처리함. 기업 경비 처리로 선택된 건만 기업계정(총괄관리자) 화면에 노출하며, 이 경우 결제수단은 신용카드만 제공함.</p>
+      <p>추가 비용 결제가 완료되면 보증금 처리 방식에 따라 후속 정산을 진행함. 보증금 가승인 방식에서는 추가 비용 상당액을 제외하고 잔여 가승인을 해제하며, 보증금/이용대금 각각 결제 방식에서는 추가 비용 상당액을 공제한 뒤 잔여 보증금 결제액을 취소함.</p>
+      <div class="flow">추가 비용 발생
+ → 비용 항목 및 금액 안내
+ → 기업계정(총괄관리자) 확인
+ → 기업 경비 처리 여부 선택
+    ├─ 기업 경비 처리 안 함: 일반 추가 비용 결제
+    └─ 기업 경비 처리함: 기업계정(총괄관리자) 화면 노출 + 신용카드 결제
+ → 추가 비용 결제 완료
+ → 보증금 처리 방식별 정산
+    ├─ 보증금 가승인: 추가 비용 상당액 제외 후 잔여 가승인 해제
+    └─ 보증금 결제: 추가 비용 상당액 공제 후 잔여 보증금 결제액 취소</div>
+
+      <h3>6.6 기업계정(총괄관리자) 관리 화면</h3>
+      <p>기업 임차인용 기업계정(총괄관리자) 화면은 전체 기업 예약 현황, 결제 상태, 보증금 상태, 증빙 내역을 확인하고 필요한 리포트를 다운로드하는 운영 화면으로 설계함.</p>
+      <table>
+        <thead><tr><th>영역</th><th>필요 기능</th><th>우선순위</th></tr></thead>
+        <tbody>
+          <tr><td>기업이용자 관리</td><td>초대, 승인, 비활성화, 이관</td><td>단기</td></tr>
+          <tr><td>예약 관리</td><td>기업계정 기준 전체 예약 조회, 미완료 예약 확인</td><td>단기</td></tr>
+          <tr><td>결제 관리</td><td>신용카드 결제 내역, 보증금 상태, 추가 비용 상태</td><td>단기</td></tr>
+          <tr><td>증빙 관리</td><td>기업계정 기준 카드 결제 내역, 수수료 증빙, 월별 이용내역 다운로드</td><td>단기</td></tr>
+          <tr><td>리포트/CSV</td><td>이용내역, 결제, 보증금, 증빙 상태 다운로드</td><td>단기</td></tr>
+          <tr><td>알림</td><td>미결제, 추가 비용, 기업 경비 처리 요청</td><td>중기</td></tr>
+          <tr><td>승인 관리</td><td>기준 초과 예약 승인 요청</td><td>중기</td></tr>
+        </tbody>
+      </table>
+
+      <h4>리포트/CSV 주요 항목</h4>
+      <table>
+        <thead><tr><th>구분</th><th>컬럼</th></tr></thead>
+        <tbody>
+          <tr><td>예약 정보</td><td>예약번호, 예약일, 입주일, 퇴거일, 예약 상태</td></tr>
+          <tr><td>방 정보</td><td>방명, 주소, 지역, 임대인명</td></tr>
+          <tr><td>사용자 정보</td><td>예약 계정, 담당자명, 기업이용자명(확장 시)</td></tr>
+          <tr><td>결제 정보</td><td>이용대금, 수수료, 보증금, 추가 비용, 총 결제금액</td></tr>
+          <tr><td>보증금 정보</td><td>결제/가승인 여부, 해제 여부, 해제일, 공제 금액</td></tr>
+          <tr><td>증빙 정보</td><td>카드 영수증, 수수료 증빙, 임대료 증빙 여부</td></tr>
+          <tr><td>운영 정보</td><td>기업 경비 처리 여부, 메모</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section" id="landlord-journey">
+      <h2>7. 기업 임대인 운영 여정 <span style="font-size:15px;color:#667085;font-weight:600">중기 과제</span></h2>
+
+      <h3>7.1 임대인 역할 사용 조건</h3>
+      <p>기업 임대인 기능은 중기 과제로 분리함. 현재 일부 운영 수요는 존재하지만, 1차 제품의 우선순위는 기업 임차인의 결제·증빙 문제 해소에 둠. 임대인 역할을 확장할 경우 사업자 명의 정산계좌와 방 운영 정보 검수를 기준으로 활성화함.</p>
+      <div class="flow">기업계정(총괄관리자)
+ → 임대인 역할 추가 신청
+ → 사업자 명의 정산계좌 등록
+ → 방 운영 정보 입력
+ → 운영팀 검수
+ → 임대인 역할 활성화
+ → 방 등록 및 계약 관리 가능</div>
+
+      <h3>7.2 방 등록 및 관리</h3>
+      <p>기업 임대인 기능 확장 시 방 등록은 기업계정(총괄관리자)을 기준으로 제공함. 이후 지점·담당자 단위 운영이 필요한 경우 기업이용자의 방 등록·배정 기능을 단계적으로 검토하며, 기업이용자가 등록한 방도 기업계정(총괄관리자) 하위 자산으로 귀속함.</p>
+      <table>
+        <thead><tr><th>항목</th><th>정책</th></tr></thead>
+        <tbody>
+          <tr><td>방 등록 주체</td><td>기업계정(총괄관리자) 우선, 기업이용자는 확장 시 적용</td></tr>
+          <tr><td>방 귀속 기준</td><td>기업계정(총괄관리자) 하위 방으로 귀속</td></tr>
+          <tr><td>기업이용자 등록 방</td><td>기업이용자 기능 확장 시 해당 기업이용자에게 기본 배정</td></tr>
+          <tr><td>기업계정(총괄관리자) 권한</td><td>전체 방 조회·수정·배정 변경</td></tr>
+          <tr><td>기업이용자 권한</td><td>확장 시 본인이 등록했거나 배정받은 방 관리</td></tr>
+          <tr><td>담당자 변경</td><td>다른 기업이용자에게 방 이관</td></tr>
+          <tr><td>방 등록 검수</td><td>기존 임대인 방 등록 검수 기준 적용</td></tr>
+        </tbody>
+      </table>
+
+      <h3>7.3 계약 조회 및 담당자 배정</h3>
+      <p>기업 임대인은 여러 방과 여러 계약을 운영할 수 있으므로, 전체 계약 조회와 담당자별 배정 구조가 필요함.</p>
+      <table>
+        <thead><tr><th>항목</th><th>기업계정(총괄관리자)</th><th>기업이용자</th></tr></thead>
+        <tbody>
+          <tr><td>전체 방 조회</td><td>가능</td><td>불가</td></tr>
+          <tr><td>배정 방 조회</td><td>가능</td><td>가능</td></tr>
+          <tr><td>전체 계약 조회</td><td>가능</td><td>불가</td></tr>
+          <tr><td>배정 계약 조회</td><td>가능</td><td>가능</td></tr>
+          <tr><td>담당자 배정 변경</td><td>가능</td><td>불가</td></tr>
+          <tr><td>계약 관련 알림</td><td>전체 수신 가능</td><td>배정 건 수신</td></tr>
+        </tbody>
+      </table>
+
+      <h3>7.4 정산계좌 정책</h3>
+      <p>기업계정(총괄관리자)은 사업자 명의 정산계좌를 여러 개 등록할 수 있어야 하고, 각 계좌를 지점 또는 방 단위로 매핑할 수 있어야 함.</p>
+      <p>법인사업자는 법인 명의 계좌를 등록해야 하며, 개인사업자는 사업자등록상 대표자 명의 계좌를 등록할 수 있음.</p>
+      <table>
+        <thead><tr><th>항목</th><th>정책</th></tr></thead>
+        <tbody>
+          <tr><td>등록 기준</td><td>사업자 명의 계좌</td></tr>
+          <tr><td>법인사업자</td><td>법인 명의 계좌</td></tr>
+          <tr><td>개인사업자</td><td>사업자등록상 대표자 명의 계좌</td></tr>
+          <tr><td>계좌 개수</td><td>기업계정(총괄관리자) 기준 복수 등록 허용</td></tr>
+          <tr><td>매핑 단위</td><td>지점 또는 방 단위</td></tr>
+          <tr><td>기업이용자 개인 계좌</td><td>사업자 명의와 무관하면 불가</td></tr>
+          <tr><td>계좌 변경</td><td>기업계정(총괄관리자) 승인 필요</td></tr>
+          <tr><td>정산내역 조회</td><td>기업계정(총괄관리자) 전체 조회, 기업이용자 배정 범위 조회</td></tr>
+        </tbody>
+      </table>
+
+      <h3>7.5 기업계정(총괄관리자) 관리 화면</h3>
+      <p>기업 임대인용 기업계정(총괄관리자) 화면은 방, 계약, 정산계좌, 담당자 배정을 관리하는 운영 화면으로 설계함. 중장기적으로는 지점·방·기업이용자별 매출과 정산 현황을 확인할 수 있는 대시보드와 전체 내역 CSV 다운로드 기능을 함께 제공하는 방향을 검토함.</p>
+      <table>
+        <thead><tr><th>영역</th><th>필요 기능</th><th>우선순위</th></tr></thead>
+        <tbody>
+          <tr><td>기업이용자 관리</td><td>지점 담당자 초대, 비활성화, 담당 방 이관</td><td>중기</td></tr>
+          <tr><td>방 관리</td><td>전체 방 조회, 방 등록, 지점별 방 배정, 운영 상태 확인</td><td>중기</td></tr>
+          <tr><td>계약 관리</td><td>전체 계약 조회, 지점별 계약 조회, 이용자 정보 확인</td><td>중기</td></tr>
+          <tr><td>정산 관리</td><td>복수 계좌 등록, 지점·방 단위 매핑, 정산내역 조회</td><td>중기</td></tr>
+          <tr><td>매출 대시보드</td><td>지점·방·기업이용자별 매출, 계약, 정산 현황 조회</td><td>중기</td></tr>
+          <tr><td>신고용 CSV</td><td>전체 계약·매출·정산 내역 다운로드</td><td>중기</td></tr>
+          <tr><td>증빙 요청 관리</td><td>계좌이체성 결제 확대 이후 임대료 증빙 요청 관리</td><td>중기</td></tr>
+          <tr><td>증빙 발행 지원</td><td>현금영수증, 계산서, 세금계산서 발행에 필요한 임차인 거래 정보 제공</td><td>중기</td></tr>
+        </tbody>
+      </table>
+
+      <h3>7.6 기업이용자 퇴사·이관</h3>
+      <p>기업이용자 기능이 확장된 이후에는 퇴사 또는 부서 이동 시 배정 방, 진행 중 계약, 미처리 정산, 증빙 요청을 다른 계정으로 이관할 수 있어야 함.</p>
+      <div class="flow">기업계정(총괄관리자)이 기업이용자 비활성화 선택
+ → 진행 중 예약/계약 확인
+ → 등록·배정 방 확인
+ → 미처리 정산·증빙 요청 확인
+ → 기업계정(총괄관리자) 또는 다른 기업이용자로 이관
+ → 이관 로그 저장
+ → 기존 기업이용자 비활성화</div>
+    </section>
+
+    <section class="section" id="roadmap">
+      <h2>8. 단계별 로드맵</h2>
+
+      <div class="roadmap-title"><span class="phase">1</span><h3>8.1 단기 과제</h3></div>
+      <h4>공통</h4>
+      <table>
+        <thead><tr><th>과제</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>기업회원 가입</td><td>사업자등록정보 자동 검증, 담당자 이메일 인증, 필요 시 서류 제출</td></tr>
+          <tr><td>기업계정(총괄관리자) 생성</td><td>기업회원 가입 완료 후 기업 전체 관리 계정 생성</td></tr>
+          <tr><td>기업이용자 초대 및 권한 분리</td><td>기업계정 하위 이용자 초대, 승인, 권한 설정</td></tr>
+          <tr><td>개인회원 전환</td><td>신규 기업회원 가입 절차 완료 후 기존 데이터 연결</td></tr>
+        </tbody>
+      </table>
+
+      <h4>기업 임차인</h4>
+      <table>
+        <thead><tr><th>과제</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>기업 이용 여부 선택</td><td>개인 예약과 기업 예약 구분</td></tr>
+          <tr><td>기업 계약요청</td><td>기업계정(총괄관리자) 또는 기업이용자 기준으로 계약요청 진행</td></tr>
+          <tr><td>신용카드 결제 중심 증빙</td><td>카드 매출전표 기반 증빙 제공으로 예약 이후 증빙 관련 CS와 이탈 리스크 축소</td></tr>
+          <tr><td>보증금/이용대금 각각 결제</td><td>보증금과 이용대금을 별도 결제 건으로 분리</td></tr>
+          <tr><td>보증금 가승인 + 이용대금 실결제</td><td>보증금은 가승인으로 처리하고, 이용대금과 수수료만 실결제</td></tr>
+          <tr><td>추가 비용 별도 결제</td><td>추가 비용 결제 후 보증금 처리 방식에 따라 잔여 가승인 해제 또는 잔여 보증금 결제액 취소</td></tr>
+          <tr><td>리포트/CSV</td><td>이용내역, 보증금 상태, 증빙 내역 다운로드</td></tr>
+          <tr><td>해외 법인 대응</td><td>해외 법인 증빙과 담당자 인증 기준 반영</td></tr>
+        </tbody>
+      </table>
+
+      <div class="roadmap-title"><span class="phase">2</span><h3>8.2 중기 과제</h3></div>
+      <table>
+        <thead><tr><th>구분</th><th>과제</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>공통</td><td>기업이용자 Offboarding</td><td>퇴사·부서 이동 시 진행 중 업무 이관</td></tr>
+          <tr><td>공통</td><td>그룹 관리</td><td>부서, 지점, 프로젝트 단위 기업이용자 관리</td></tr>
+          <tr><td>공통</td><td>기업 전용 운영 Desk</td><td>기업 예약, 결제, 증빙 문의를 전담 처리하는 지원 채널 검토</td></tr>
+          <tr><td>기업 임차인</td><td>기업 대표카드 결제</td><td>기업계정(총괄관리자)이 등록한 대표카드로 허용된 기업이용자 결제</td></tr>
+          <tr><td>기업 임차인</td><td>대리 예약</td><td>예약 담당자와 실제 이용 주체 분리, 입주 안내 자동 분기</td></tr>
+          <tr><td>기업 임차인</td><td>기업 신뢰도 기반 즉시 확정</td><td>검증된 기업 임차인을 대상으로 일부 방의 계약승인 절차를 간소화하는 구조 검토</td></tr>
+          <tr><td>기업 임차인</td><td>계좌이체성 결제</td><td>임대료 증빙 가능 임대인 풀 확보 후 제한적 확대</td></tr>
+          <tr><td>기업 임대인</td><td>임대인 역할 활성화</td><td>사업자 명의 정산계좌 등록과 방 운영 정보 검수 후 임대인 기능 제공</td></tr>
+          <tr><td>기업 임대인</td><td>방 등록 및 계약 조회</td><td>기업계정 기준 방 등록, 전체 계약 조회, 배정 범위 관리</td></tr>
+          <tr><td>기업 임대인</td><td>신고용 CSV</td><td>세무 신고와 내부 회계 처리를 위한 전체 계약·매출·정산 내역 다운로드</td></tr>
+          <tr><td>기업 임대인</td><td>지점·방별 정산</td><td>사업자 명의 계좌 복수 등록 및 지점·방 단위 매핑</td></tr>
+          <tr><td>기업 임대인</td><td>운영 대시보드</td><td>지점·방·기업이용자별 매출, 계약, 정산 현황 조회</td></tr>
+          <tr><td>기업 임대인</td><td>증빙 발행 지원</td><td>계좌이체성 결제 확대 이후 현금영수증, 계산서, 세금계산서 발행을 지원하는 구조 검토</td></tr>
+        </tbody>
+      </table>
+
+      <div class="roadmap-title"><span class="phase">3</span><h3>8.3 장기 과제</h3></div>
+      <table>
+        <thead><tr><th>구분</th><th>과제</th><th>내용</th></tr></thead>
+        <tbody>
+          <tr><td>기업 임차인</td><td>월 단위 청구</td><td>검증된 기업에 월별 청구서·정산서 발행</td></tr>
+          <tr><td>기업 임차인</td><td>외부 시스템 연동</td><td>TMC, ERP, 회계 시스템 연동</td></tr>
+          <tr><td>기업 임대인</td><td>증빙 자동화</td><td>현금영수증·계산서·세금계산서 발행 상태 추적, 미발행 알림, 일괄 다운로드</td></tr>
+          <tr><td>기업 임대인</td><td>정산 고도화</td><td>지점·방별 정산 리포트, 회계 다운로드, 정산 이상 감지</td></tr>
+          <tr><td>기업 임대인</td><td>매출 분석 고도화</td><td>지점·방·담당자별 매출 추이, 계약 전환, 정산 리스크 분석</td></tr>
+        </tbody>
+      </table>
+    </section>
+</main>
+</body>
+</html>
